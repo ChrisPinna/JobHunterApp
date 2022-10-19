@@ -63,4 +63,17 @@ export const updateJobHunt = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-export const deleteJobHunt = () => {};
+export const deleteJobHunt = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    await db.query("DELETE FROM jobhunts where id = $1", [id]);
+
+    res.status(204).json({
+      status: "Success",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};

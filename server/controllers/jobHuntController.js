@@ -44,5 +44,23 @@ export const createJobHunt = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-export const updateJobHunt = () => {};
+export const updateJobHunt = async (req, res) => {
+  const { title, description, link, status } = req.body;
+  const id = req.params.id;
+
+  try {
+    const result = await db.query(
+      "UPDATE jobhunts SET title = $1, link = $2, description = $3, status = $4 where id = $5 returning *",
+      [title, description, link, status, id]
+    );
+
+    res.status(200).json({
+      message: "Success",
+      data: result.rows,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
 export const deleteJobHunt = () => {};

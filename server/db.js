@@ -6,7 +6,7 @@ const db = new Pool({
   user: process.env.PSQL_USER,
   password: process.env.PSQL_PASSWORD,
   port: 5432,
-  database: "JobHunterApp",
+  database: "jobhunterapp",
 });
 
 export default db;

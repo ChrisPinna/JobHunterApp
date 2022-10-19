@@ -1,7 +1,7 @@
 import styled from "styled-components"
-import { data } from "../dummyData"
 import JobHunt from "./JobHunt"
 import { JobHuntType } from "../typings"
+import { JobHuntState } from "../context/JobHuntContext";
 
 const Container = styled.div`
 margin-left: 8.5rem;
@@ -12,9 +12,13 @@ overflow-y: scroll;
 `
 
 const JobHunts = () => {
+  const { jobHunts } = JobHuntState();
+
+  if (!jobHunts) return <span>"No jobhunts found"</span>
+
   return (
     <Container>
-        {data.map((jobHunt: JobHuntType) => (<JobHunt key={jobHunt.id} jobHunt={jobHunt}/>))}
+        {jobHunts.data?.map((jobHunt: JobHuntType) => (<JobHunt key={jobHunt.id} jobHunt={jobHunt}/>))}
     </Container>
   )
 }

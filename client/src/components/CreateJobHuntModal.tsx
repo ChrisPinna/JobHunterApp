@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Modal, Button, Group, useMantineTheme } from "@mantine/core";
 import { useState } from "react";
+import axios from "axios";
+import { JobHuntState } from "../context/JobHuntContext";
 
 const Container = styled.div``;
 const Wrapper = styled.div``;
@@ -29,7 +31,7 @@ const SubmitButton = styled.button`
       red 0 -18px 40px, -12px 14px 20px -19px rgba(0, 0, 0, 0);
     box-shadow: #fff 0 -1px 4px, #ff0 0 -2px 10px, #ff8000 0 -10px 20px,
       red 0 -18px 40px, -12px 14px 20px -19px rgba(0, 0, 0, 0);
-  } 
+  }
 `;
 type Props = {
   modalOpened: boolean;
@@ -37,20 +39,30 @@ type Props = {
 };
 
 const CreateJobHuntModal = ({ modalOpened, setModalOpened }: Props) => {
+  const [title, setTitle] = useState("");
+  const [link, setLink] = useState("");
+  const [description, setDescription] = useState("");
+  const [huntStatus, setHuntStatus] = useState("");
+  const {jobHunts} = JobHuntState();
 
-  const [title, setTitle] = useState("")
-  const [link, setLink] = useState("")
-  const [description, setDescription] = useState("")
-  const [huntStatus, setHuntStatus] = useState("")
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const newJobHunt = {
+      title,
+      link,
+      description,
+      status: huntStatus,
+    };
 
-  const handleSubmit = (e: any) => {
-      e.preventDefault();
-      console.log(title);
-      console.log(link);
-      console.log(description);
-      console.log(huntStatus);
-      setModalOpened(false);
-  }
+    try {
+      await axios.post("/jobhunts", newJobHunt);
+      
+    } catch (error) {
+      console.log(error);
+    }
+
+    setModalOpened(false);
+  };
 
   return (
     <Modal
@@ -62,10 +74,19 @@ const CreateJobHuntModal = ({ modalOpened, setModalOpened }: Props) => {
       <Container>
         <Wrapper>
           <Form onSubmit={handleSubmit}>
-            <Input placeholder="Title" onChange={(e)=>setTitle(e.target.value)}/>
-            <Input placeholder="Application Link" onChange={(e)=>setLink(e.target.value)}/>
-            <Description placeholder="Description:" onChange={(e)=>setDescription(e.target.value)}/>
-            <HuntStatus onChange={(e)=>setHuntStatus(e.target.value)}>
+            <Input
+              placeholder="Title"
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <Input
+              placeholder="Application Link"
+              onChange={(e) => setLink(e.target.value)}
+            />
+            <Description
+              placeholder="Description:"
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <HuntStatus onChange={(e) => setHuntStatus(e.target.value)}>
               <option value="" hidden>
                 Hunt Status
               </option>

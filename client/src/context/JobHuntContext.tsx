@@ -21,7 +21,10 @@ const JobHuntContext = ({ children }: { children: any }) => {
     };
 
     fetchJobHunts();
-  }, []);
+  }, [jobHunts]);
+
+  // reducers
+
 
   return <JobHuntsContext.Provider value={{ jobHunts }}>{children}</JobHuntsContext.Provider>;
 };

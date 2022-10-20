@@ -3,7 +3,7 @@ export type JobHuntType = {
     title: string,
     applicationLink: string,
     description?: string,
-    status: number,
+    status: string,
     dateApplied?: string,
     deadline?: string
 }

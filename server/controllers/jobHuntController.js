@@ -51,7 +51,7 @@ export const updateJobHunt = async (req, res) => {
   try {
     const result = await db.query(
       "UPDATE jobhunts SET title = $1, link = $2, description = $3, status = $4 where id = $5 returning *",
-      [title, description, link, status, id]
+      [title, link, description, status, id]
     );
 
     res.status(200).json({

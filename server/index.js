@@ -3,6 +3,7 @@ import cors from "cors"
 import "dotenv/config"
 import helmet from "helmet"
 
+import authRoutes from './routes/authRoutes.js'
 import jobHuntRoutes from './routes/jobHuntRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(helmet());
 
+app.use('/api/auth', authRoutes)
 app.use('/api/jobhunts', jobHuntRoutes);
 app.use('/api/users', userRoutes);
 

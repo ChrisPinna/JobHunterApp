@@ -1,6 +1,6 @@
 su postgres
 
-createdb JobHunterApp
+createdb jobhunterapp
 
 CREATE TABLE jobhunts (
     id BIGSERIAL NOT NULL PRIMARY KEY,

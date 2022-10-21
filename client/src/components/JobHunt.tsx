@@ -49,7 +49,7 @@ const JobHunt = ({jobHunt}: Props) => {
   return (
     <Container>
         <Wrapper>
-            <Link to={jobHunt.applicationLink}>
+            <Link to={jobHunt.link}>
                 <Title>{jobHunt.title}</Title>
             </Link>
             <Status>{jobHunt.status}</Status>

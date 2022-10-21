@@ -90,7 +90,7 @@ const JobHuntModal = ({ modalOpened, setModalOpened, jobHunt }: Props) => {
   const theme = useMantineTheme();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [title, setTitle] = useState(jobHunt.title);
-  const [link, setLink] = useState(jobHunt.applicationLink);
+  const [link, setLink] = useState(jobHunt.link);
   const [description, setDescription] = useState(jobHunt.description);
   const [huntStatus, setHuntStatus] = useState(jobHunt.status);
   const {jobHunts} = JobHuntState();
@@ -167,7 +167,7 @@ const JobHuntModal = ({ modalOpened, setModalOpened, jobHunt }: Props) => {
           ) : (
             <>
               <Title>{jobHunt.title}</Title>
-              <ApplicationLink>{jobHunt.applicationLink}</ApplicationLink>
+              <ApplicationLink>{jobHunt.link}</ApplicationLink>
               <Description>{jobHunt.description}</Description>
               <Status>{jobHunt.status}</Status>
               <IconsContainer>

@@ -16,4 +16,4 @@ router.put('/:id', updateJobHunt);
 // delete a jobhunt
 router.delete('/:id', deleteJobHunt);
 
-export default router
+export default router;

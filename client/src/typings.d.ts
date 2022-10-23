@@ -7,3 +7,11 @@ export type JobHuntType = {
     dateApplied?: string,
     deadline?: string
 }
+
+export type UserType = {
+    id: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+}

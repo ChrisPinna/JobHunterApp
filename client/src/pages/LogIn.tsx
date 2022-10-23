@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
 
@@ -71,9 +72,39 @@ const LoginPrompt = styled.span`
   color: blue;
   text-decoration: underline;
 `;
+const PasswordMessage = styled.span`
+  color: red;
+`
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (!isLogin) {
+      if(password === confirmPassword) {
+        const user = {
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          password
+        }
+        try {
+          await axios.post('/auth/register', user);
+        } catch (error) {
+          console.log(error);
+        };
+      } else {
+        setPasswordsMatch(false);
+      };
+    }
+  }
 
   return (
     <Container>
@@ -81,43 +112,72 @@ const Login = () => {
         {isLogin ? (
           <>
             <Header>Log In!</Header>
-            <Form>
+            <Form onSubmit={handleSubmit}>
               <Input
                 placeholder="Email"
                 type="email"
-                style={{width: "100%"}}
+                style={{ width: "100%" }}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
-              <Input placeholder="Password" type="password" style={{width: "100%"}}/>
+              <Input
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="Password"
+                type="password"
+                style={{ width: "100%" }}
+              />
               <BottomContainer>
-                <LoginPrompt onClick={()=>setIsLogin(false)}>
+                <LoginPrompt onClick={() => setIsLogin(false)}>
                   Don't have an account? Sign up here!
                 </LoginPrompt>
-                <SubmitButton>Sign Up</SubmitButton>
+                <SubmitButton type="submit">Sign Up</SubmitButton>
               </BottomContainer>
             </Form>
           </>
         ) : (
           <>
             <Header>Sign Up to Job Hunter</Header>
-            <Form>
+            <Form onSubmit={handleSubmit}>
               <InputContainer>
-                <Input placeholder="First Name" />
-                <Input placeholder="Last Name" />
+                <Input
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                  placeholder="First Name"
+                />
+                <Input
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                  placeholder="Last Name"
+                />
               </InputContainer>
               <Input
+                onChange={(e) => setEmail(e.target.value)}
+                required
                 placeholder="Email"
                 type="email"
                 style={{ width: "100%" }}
               />
               <InputContainer>
-                <Input placeholder="Password" type="password" />
-                <Input placeholder="Confirm Password" type="password" />
+                <Input
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  placeholder="Password"
+                  type="password"
+                />
+                <Input
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  placeholder="Confirm Password"
+                  type="password"
+                />
               </InputContainer>
+              {!passwordsMatch && <PasswordMessage>*Passwords do not match!</PasswordMessage>}
               <BottomContainer>
-                <LoginPrompt onClick={()=>setIsLogin(true)}>
+                <LoginPrompt onClick={() => setIsLogin(true)}>
                   Already have an account? Click here to log in
                 </LoginPrompt>
-                <SubmitButton>Sign Up</SubmitButton>
+                <SubmitButton type="submit">Sign Up</SubmitButton>
               </BottomContainer>
             </Form>
           </>
